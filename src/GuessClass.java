@@ -19,17 +19,20 @@ public class GuessClass {
     final private static String[] messagesHigher = { // 2 arrays, one if it's lower, one if it's higher
             "No way, it is higher then that!",
             "Really? It is higher then that!",
-            "Nope! It is higher then that!"};
+            "Nope! It is higher then that!",
+            "Wow. You do not know how guess. Higher!"};
 
     final private static String[] messagesLower = {
             "No way, it is lower then that!",
             "Really? It is lower then that!",
-            "Nope! It is lower then that!"};
+            "Nope! It is lower then that!",
+            "Wow. You do not know how to guess. Lower!"};
 
-    final private static String[] hardMessage = {
+    final private static String[] hardMessage = {// array for hard mode
             "No way!",
             "Really?",
-            "Nope!"};
+            "Nope!",
+            "Wow. Nope."};
 
     private static Boolean[] hasTyped = new Boolean[10];
 
