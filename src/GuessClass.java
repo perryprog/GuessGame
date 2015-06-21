@@ -36,26 +36,25 @@ public class GuessClass {
 
     private static Boolean[] hasTyped = new Boolean[10];
 
-
-
     public static void main(String[] args) {
 
         while (true) {
 
-            int target = 0;// the number you will try to get to
-            int current_guess = 0;// the  number you have just typed
-            int rand_message = 0;// for the random message you see
+            int target;// the number you will try to get to
+            int current_guess;// the  number you have just typed
+            int rand_message;// for the random message you see
             int times_guessed = 0;// the number of times you guessed
+            int not_number;
 
-            boolean higher = false;// for if the target is higher then what you guessed
+            boolean higher;// for if the target is higher then what you guessed
 
-            long start = 0;// timer
-            long stop = 0;// timer
-            long total_mill = 0;// timer
-            long total_sec = 0;// timer
+            long start;// timer
+            long stop;// timer
+            long total_mill;// timer
+            long total_sec;// timer
 
-            String start_string = "null";// for typing start at the beginning
-            String difficulty = "null";// if your mode is hard
+            String start_string;// for typing start at the beginning
+            String difficulty;// if your mode is hard
 
             Scanner user_input = new Scanner(System.in);// configuring imports
             Random rn = new Random();
@@ -64,12 +63,11 @@ public class GuessClass {
 
             target = rn.nextInt(10) + 1;// the random target
 
-
             while (true) {
 
-                System.out.println("Please type hard for hard or easy for easy");
+                System.out.println("Please type hard for hard or medium for medium or easy for easy");
                 difficulty = user_input.next();
-                if (difficulty.equals("hard") || difficulty.equals("easy")) {
+                if (difficulty.equals("hard") || difficulty.equals("easy") || difficulty.equals("medium")) {
                     break;
                 }
 
@@ -87,12 +85,25 @@ public class GuessClass {
 
             current_guess = user_input.nextInt();// sets your guess to what you type
 
-
             if (current_guess >= 1 && current_guess <= 10) {
 
                 start = System.currentTimeMillis();// "starts" the timer
 
                 while (current_guess != target) { // loops until you guess right - skips it if you guess the right number the first timer
+
+                    not_number = rn.nextInt(10) + 1;
+
+                    while (not_number == current_guess){
+
+                        not_number = rn.nextInt(10) + 1;
+
+                    }
+
+                    for (int i = 0; i >= 10; i++ ){
+
+                        hasTyped[not_number] = true;
+
+                    }
 
                     rand_message = rn.nextInt(messagesHigher.length); // gets the next random message
 
@@ -113,7 +124,17 @@ public class GuessClass {
                         }
                     }
                     else {
-                        System.out.println(hardMessage[rand_message]);
+                        if (difficulty.equals("hard")) {
+                            System.out.println(hardMessage[rand_message]);
+                        }
+                        else{
+
+                              System.out.println(hardMessage[rand_message] + " But is also not " + not_number + ".");
+
+                            hasTyped[not_number] = true;
+
+                            }
+
                     }
                     hasTyped[current_guess] = true;
                     current_guess = user_input.nextInt();// lets you type the next guess
@@ -132,7 +153,7 @@ public class GuessClass {
                 total_sec = total_mill / 1000;// does above, in seconds
 
 
-                if (times_guessed + 1 == 1) {// if you had 1 guess you get a special message
+                if (times_guessed == 1) {// if you had 1 guess you get a special message
 
                     System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed on your first try!");// first try message
 
