@@ -38,7 +38,7 @@ public class GuessClass {
 
     public static void main(String[] args) {
 
-        while (true) {
+        while (true) {// loop so you don't have to restart program
 
             int target;// the number you will try to get to
             int current_guess;// the  number you have just typed
