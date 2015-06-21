@@ -66,7 +66,7 @@ public class GuessClass {
 
             while (true) {
 
-                System.out.println("Please type hard or medium or easy");// user prompt
+                System.out.println("Please type hard, medium or easy.");// user prompt
                 difficulty = user_input.next();
                 if (difficulty.equals("hard") || difficulty.equals("easy") || difficulty.equals("medium") || difficulty.equals("easter")) {// check for if your answer is valid
                     break;
@@ -83,11 +83,19 @@ public class GuessClass {
             }
 
             while (true) {
-                System.out.println("Please type \"start\" to begin!");// second user prompt
+                System.out.println("Please type start to begin, or stop to end the program!");// second user prompt
                 start_string = user_input.next();
-                if (start_string.equals("start")) {// check for valid answer
+                if (start_string.equals("start") || start_string.equals("stop")) {// check for valid answer
                     break;
                 }
+            }
+
+            if (start_string.equals("stop")){
+
+                System.out.println("Ending...");
+
+                System.exit(0);
+
             }
 
             System.out.print("I am thinking of a number 1 through 10... Can you guess it?");// first message you see
