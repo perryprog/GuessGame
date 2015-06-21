@@ -76,7 +76,7 @@ public class GuessClass {
 
             if (difficulty.equals("easter")){// I not saying. :3
 
-                System.out.println("You win! Paaaaartey!!!!!!");
+                System.out.println("You win! Party!!!!!!");
 
                 System.exit(0);
 
