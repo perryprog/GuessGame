@@ -1,5 +1,6 @@
 /**
  * Created by Perry on 6/11/15.
+ * A simple guessing game
  */
 
 import java.util.Random;// my imports
@@ -109,6 +110,7 @@ public class GuessClass {
 
                     higher = current_guess < target; // sets higher to true if target is higher
 
+                    current_guess--;
                     if (hasTyped[current_guess]) { // looks if you are insane (I'm not kidding)
                         System.out.println("The definition of insanity is doing the same thing, but expecting a different result.");
                     }
@@ -125,13 +127,16 @@ public class GuessClass {
                     }
                     else {
                         if (difficulty.equals("hard")) {
+
                             System.out.println(hardMessage[rand_message]);
+
                         }
                         else{
 
-                              System.out.println(hardMessage[rand_message] + " But is also not " + not_number + ".");
-
+                            not_number--;
                             hasTyped[not_number] = true;
+
+                              System.out.println(hardMessage[rand_message] + " But is also not " + not_number + ".");
 
                             }
 
@@ -168,7 +173,9 @@ public class GuessClass {
             }
 
             else {
+
                 System.out.println("Please only use numbers 1 through 10!");
+
             }
 
         }
