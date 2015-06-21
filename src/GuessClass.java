@@ -16,7 +16,7 @@ public class GuessClass {
 
         }
     }
-    
+
     final private static String[] messagesHigher = { // 2 arrays, one if it's lower, one if it's higher
             "No way, it is higher then that!",
             "Really? It is higher then that!",
@@ -45,7 +45,7 @@ public class GuessClass {
             int current_guess;// the  number you have just typed
             int rand_message;// for the random message you see
             int times_guessed = 0;// the number of times you guessed
-            int not_number;
+            int not_number;// for medium mode
 
             boolean higher;// for if the target is higher then what you guessed
 
@@ -60,23 +60,32 @@ public class GuessClass {
             Scanner user_input = new Scanner(System.in);// configuring imports
             Random rn = new Random();
 
-            makeFalse();
+            makeFalse();// function for making boolean array false (line 11)
 
             target = rn.nextInt(10) + 1;// the random target
 
             while (true) {
 
-                System.out.println("Please type hard for hard or medium for medium or easy for easy");
+                System.out.println("Please type hard or medium or easy");// user prompt
                 difficulty = user_input.next();
-                if (difficulty.equals("hard") || difficulty.equals("easy") || difficulty.equals("medium")) {
+                if (difficulty.equals("hard") || difficulty.equals("easy") || difficulty.equals("medium") || difficulty.equals("easter")) {// check for if your answer is valid
                     break;
                 }
 
             }
+
+            if (difficulty.equals("easter")){// I not saying. :3
+
+                System.out.println("You win! Paaaaartey!!!!!!");
+
+                System.exit(0);
+
+            }
+
             while (true) {
-                System.out.println("Please type \"start\" to begin!");
+                System.out.println("Please type \"start\" to begin!");// second user prompt
                 start_string = user_input.next();
-                if (start_string.equals("start")) {
+                if (start_string.equals("start")) {// check for valid answer
                     break;
                 }
             }
@@ -92,19 +101,16 @@ public class GuessClass {
 
                 while (current_guess != target) { // loops until you guess right - skips it if you guess the right number the first timer
 
-                    not_number = rn.nextInt(10) + 1;
+                    not_number = rn.nextInt(10) + 1;// for medium difficulty
 
-                    while (not_number == current_guess){
+                    while (not_number == current_guess){// makes sure not number is not repetitive
 
-                        not_number = rn.nextInt(10) + 1;
-
-                    }
-
-                    for (int i = 0; i >= 10; i++ ){
-
-                        hasTyped[not_number] = true;
+                        not_number = rn.nextInt(10) + 1;// resets number if so
 
                     }
+
+                    hasTyped[not_number] = true;
+
 
                     rand_message = rn.nextInt(messagesHigher.length); // gets the next random message
 
@@ -114,7 +120,7 @@ public class GuessClass {
                     if (hasTyped[current_guess]) { // looks if you are insane (I'm not kidding)
                         System.out.println("The definition of insanity is doing the same thing, but expecting a different result.");
                     }
-                    if (difficulty.equals("easy")) {
+                    if (difficulty.equals("easy")) {// the messages
                         if (higher) {
 
                             System.out.println(messagesHigher[rand_message]);
@@ -133,12 +139,12 @@ public class GuessClass {
                         }
                         else{
 
-                            not_number--;
+                            not_number--;//so we don't crash -_-
                             hasTyped[not_number] = true;
 
-                              System.out.println(hardMessage[rand_message] + " But is also not " + not_number + ".");
+                            System.out.println(hardMessage[rand_message] + " But is also not " + not_number + ".");
 
-                            }
+                        }
 
                     }
                     hasTyped[current_guess] = true;
@@ -147,7 +153,9 @@ public class GuessClass {
 
                 }
                 if (current_guess >= 1 && current_guess <= 10) {
+
                     System.out.println();
+
                 }
 
                 times_guessed++;// one up to how many guesses you have
