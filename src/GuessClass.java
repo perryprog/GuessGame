@@ -111,12 +111,12 @@ public class GuessClass {
 
                     not_number = rn.nextInt(10) + 1;// for medium difficulty
 
-                    while (not_number == current_guess){// makes sure not number is not repetitive
+                    while (not_number == current_guess || not_number == target){// makes sure not number is not repetitive
 
                         not_number = rn.nextInt(10) + 1;// resets number if so
 
                     }
-
+                    not_number--;//so we don't crash -_-
                     hasTyped[not_number] = true;
 
 
@@ -147,9 +147,8 @@ public class GuessClass {
                         }
                         else{
 
-                            not_number--;//so we don't crash -_-
                             hasTyped[not_number] = true;
-
+                            not_number++;
                             System.out.println(hardMessage[rand_message] + " But is also not " + not_number + ".");
 
                         }
