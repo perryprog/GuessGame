@@ -46,6 +46,7 @@ public class GuessClass {
             int rand_message;// for the random message you see
             int times_guessed = 0;// the number of times you guessed
             int not_number;// for medium mode
+            int insane_points = 0;
 
             boolean higher;// for if the target is higher then what you guessed
 
@@ -74,7 +75,7 @@ public class GuessClass {
 
             }
 
-            if (difficulty.equals("easter")){// I not saying. :3
+            if (difficulty.equals("easter")) {// I not saying. :3
 
                 System.out.println("You win! Party!!!!!!");
 
@@ -90,7 +91,7 @@ public class GuessClass {
                 }
             }
 
-            if (start_string.equals("stop")){
+            if (start_string.equals("stop")) {
 
                 System.out.println("Ending...");
 
@@ -111,7 +112,7 @@ public class GuessClass {
 
                     not_number = rn.nextInt(10) + 1;// for medium difficulty
 
-                    while (not_number == current_guess || not_number == target){// makes sure not number is not repetitive
+                    while (not_number == current_guess || not_number == target) {// makes sure not number is not repetitive
 
                         not_number = rn.nextInt(10) + 1;// resets number if so
 
@@ -127,6 +128,7 @@ public class GuessClass {
                     current_guess--;
                     if (hasTyped[current_guess]) { // looks if you are insane (I'm not kidding)
                         System.out.println("The definition of insanity is doing the same thing, but expecting a different result.");
+                        insane_points++;
                     }
                     if (difficulty.equals("easy")) {// the messages
                         if (higher) {
@@ -138,14 +140,12 @@ public class GuessClass {
                             System.out.println(messagesLower[rand_message]);
 
                         }
-                    }
-                    else {
+                    } else {
                         if (difficulty.equals("hard")) {
 
                             System.out.println(hardMessage[rand_message]);
 
-                        }
-                        else{
+                        } else {
 
                             hasTyped[not_number] = true;
                             not_number++;
@@ -175,19 +175,17 @@ public class GuessClass {
 
                 if (times_guessed == 1) {// if you had 1 guess you get a special message
 
-                    System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed on your first try!");// first try message
+                    System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed on your first try! In addition you had " + insane_points + " insane points!");// first try message
 
                 } else {
 
                     times_guessed++;
 
-                    System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed " + times_guessed + " times!");// +1 try else message
+                    System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed " + times_guessed + " times! In addition you had " + insane_points + " insane points!");// +1 try else message
 
                 }
 
-            }
-
-            else {
+            } else {
 
                 System.out.println("Please only use numbers 1 through 10!");
 
