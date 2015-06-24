@@ -3,6 +3,7 @@
  * A simple guessing game
  */
 
+import java.util.InputMismatchException;
 import java.util.Random;// my imports
 import java.util.Scanner;
 
@@ -42,13 +43,14 @@ public class GuessClass {
         while (true) {// loop so you don't have to restart program
 
             int target;// the number you will try to get to
-            int current_guess;// the  number you have just typed
+            int current_guess = 1;// the  number you have just typed
             int rand_message;// for the random message you see
             int times_guessed = 0;// the number of times you guessed
             int not_number;// for medium mode
             int insane_points = 0;
 
             boolean higher;// for if the target is higher then what you guessed
+            boolean is_number = false;// so you don't type text
 
             long start;// timer
             long stop;// timer
@@ -99,10 +101,22 @@ public class GuessClass {
 
             }
 
-            System.out.print("I am thinking of a number 1 through 10... Can you guess it?");// first message you see
+            while (!is_number) {
+
+                System.out.print("I am thinking of a number 1 through 10... Can you guess it?");// first message you see
             System.out.println();// new line
 
-            current_guess = user_input.nextInt();// sets your guess to what you type
+                try {
+                    current_guess = user_input.nextInt();// sets your guess to what you type
+                    is_number = true;
+
+                }
+                catch (InputMismatchException x) {
+                    System.out.println("Please only type numbers!");
+                    user_input = new Scanner(System.in);// configuring imports
+                    is_number = false;
+                }
+            }
 
             if (current_guess >= 1 && current_guess <= 10) {
 
