@@ -3,7 +3,6 @@
  * A simple guessing game
  */
 
-import java.lang.reflect.Array;
 import java.util.InputMismatchException;
 import java.util.Random;// my imports
 import java.util.Scanner;
@@ -107,8 +106,6 @@ public class GuessClass {
             user_input = new Scanner(System.in);// configuring imports
             Random rn = new Random();
 
-            makeFalse();// function for making boolean array false (line 11)
-
             target = rn.nextInt(10) + 1;// the random target
 
             while (true) {
@@ -128,6 +125,8 @@ public class GuessClass {
                 System.exit(0);
 
             }
+
+            makeFalse();// function for making boolean array false (line 11)
 
             while (true) {
                 System.out.println("Please type start to begin, or stop to end the program!");// second user prompt
@@ -160,9 +159,10 @@ public class GuessClass {
                         not_number = rn.nextInt(10) + 1;// resets number if so
 
                     }
-                    not_number--;//so we don't crash -_-
-                    hasTyped[not_number] = true;
-
+                    if (difficulty.equals("medium")) {
+                        not_number--;//so we don't crash :/
+                        hasTyped[not_number] = true;
+                    }
 
                     rand_message = rn.nextInt(messagesHigher.length); // gets the next random message
 
