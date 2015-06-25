@@ -3,6 +3,7 @@
  * A simple guessing game
  */
 
+import java.lang.reflect.Array;
 import java.util.InputMismatchException;
 import java.util.Random;// my imports
 import java.util.Scanner;
@@ -61,6 +62,7 @@ public class GuessClass {
     private static void checkNumber() {
 
         boolean is_number = false;// so you don't type text
+        boolean isInBounds = false;// so you don't go out of bounds 
 
         while (!is_number) {
 
@@ -68,8 +70,25 @@ public class GuessClass {
             System.out.println();// new line
 
             try {
-                current_guess = user_input.nextInt();// sets your guess to what you type
-                is_number = true;
+
+                while (!isInBounds) {
+                    try {
+
+                        current_guess = user_input.nextInt();// sets your guess to what you type
+                        is_number = true;
+                        isInBounds = true;
+
+                    } catch (ArrayIndexOutOfBoundsException x) {
+
+                        if (current_guess <= 1 && current_guess >= 10) {
+
+                            System.out.println("Please only type numbers one through ten!");
+
+                        }
+
+                    }
+
+                }
 
             }
             catch (InputMismatchException x) {
@@ -182,11 +201,6 @@ public class GuessClass {
                     checkNumber();
 
                 }
-                if (current_guess >= 1 && current_guess <= 10) {
-
-                    System.out.println();
-
-                }
 
                 times_guessed++;// one up to how many guesses you have
 
@@ -207,10 +221,6 @@ public class GuessClass {
                     System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed " + times_guessed + " times! In addition you had " + insane_points + " insane points!");// +1 try else message
 
                 }
-
-            } else {
-
-                System.out.println("Please only use numbers 1 through 10!");
 
             }
 
