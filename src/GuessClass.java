@@ -9,15 +9,6 @@ import java.util.Scanner;
 
 public class GuessClass {
 
-    private static void makeFalse() {
-
-        for (int i = 0; i < 10; i++) {
-
-            hasTyped[i] = false;
-
-        }
-    }
-
     final private static String[] messagesHigher = { // 2 arrays, one if it's lower, one if it's higher
             "No way, it is higher then that!",
             "Really? It is higher then that!",
@@ -38,29 +29,63 @@ public class GuessClass {
 
     private static Boolean[] hasTyped = new Boolean[10];
 
+    private static int target;// the number you will try to get to
+    private static int current_guess = 1;// the  number you have just typed
+    private static int rand_message;// for the random message you see
+    private static int times_guessed = 0;// the number of times you guessed
+    private static int not_number;// for medium mode
+    private static int insane_points = 0;
+
+    private static boolean higher;// for if the target is higher then what you guessed
+
+    private static long start;// timer
+    private static long stop;// timer
+    private static long total_mill;// timer
+    private static long total_sec;// timer
+
+    private static String start_string;// for typing start at the beginning
+    private static String difficulty;// if your mode is hard
+
+    private static Scanner user_input;
+
+
+    private static void makeFalse() {
+
+        for (int i = 0; i < 10; i++) {
+
+            hasTyped[i] = false;
+
+        }
+    }
+
+    private static void checkNumber() {
+
+        boolean is_number = false;// so you don't type text
+
+        while (!is_number) {
+
+            System.out.print("I am thinking of a number 1 through 10... Can you guess it?");// first message you see
+            System.out.println();// new line
+
+            try {
+                current_guess = user_input.nextInt();// sets your guess to what you type
+                is_number = true;
+
+            }
+            catch (InputMismatchException x) {
+                System.out.println("Please only type numbers!");
+                user_input = new Scanner(System.in);// configuring imports
+                is_number = false;
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
 
         while (true) {// loop so you don't have to restart program
 
-            int target;// the number you will try to get to
-            int current_guess = 1;// the  number you have just typed
-            int rand_message;// for the random message you see
-            int times_guessed = 0;// the number of times you guessed
-            int not_number;// for medium mode
-            int insane_points = 0;
-
-            boolean higher;// for if the target is higher then what you guessed
-            boolean is_number = false;// so you don't type text
-
-            long start;// timer
-            long stop;// timer
-            long total_mill;// timer
-            long total_sec;// timer
-
-            String start_string;// for typing start at the beginning
-            String difficulty;// if your mode is hard
-
-            Scanner user_input = new Scanner(System.in);// configuring imports
+            user_input = new Scanner(System.in);// configuring imports
             Random rn = new Random();
 
             makeFalse();// function for making boolean array false (line 11)
@@ -101,22 +126,7 @@ public class GuessClass {
 
             }
 
-            while (!is_number) {
-
-                System.out.print("I am thinking of a number 1 through 10... Can you guess it?");// first message you see
-            System.out.println();// new line
-
-                try {
-                    current_guess = user_input.nextInt();// sets your guess to what you type
-                    is_number = true;
-
-                }
-                catch (InputMismatchException x) {
-                    System.out.println("Please only type numbers!");
-                    user_input = new Scanner(System.in);// configuring imports
-                    is_number = false;
-                }
-            }
+            checkNumber();
 
             if (current_guess >= 1 && current_guess <= 10) {
 
@@ -168,9 +178,8 @@ public class GuessClass {
                         }
 
                     }
-                    hasTyped[current_guess] = true;
-                    current_guess = user_input.nextInt();// lets you type the next guess
 
+                    checkNumber();
 
                 }
                 if (current_guess >= 1 && current_guess <= 10) {
