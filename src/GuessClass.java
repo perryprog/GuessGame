@@ -145,7 +145,6 @@ public class GuessClass {
             }
 
             checkNumber();
-            hasTyped[current_guess] = true;
 
             if (current_guess >= 1 && current_guess <= 10) {
 
