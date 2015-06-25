@@ -145,6 +145,7 @@ public class GuessClass {
             }
 
             checkNumber();
+            hasTyped[current_guess] = true;
 
             if (current_guess >= 1 && current_guess <= 10) {
 
@@ -168,7 +169,7 @@ public class GuessClass {
 
                     higher = current_guess < target; // sets higher to true if target is higher
 
-                    current_guess--;
+                    //current_guess--;
                     if (hasTyped[current_guess]) { // looks if you are insane (I'm not kidding)
                         System.out.println("The definition of insanity is doing the same thing, but expecting a different result.");
                         insane_points++;
@@ -199,6 +200,7 @@ public class GuessClass {
                     }
 
                     checkNumber();
+                    hasTyped[current_guess] = true;
 
                 }
 
