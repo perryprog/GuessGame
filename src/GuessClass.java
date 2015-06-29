@@ -132,8 +132,6 @@ public class GuessClass {
             user_input = new Scanner(System.in);// configuring imports
             Random rn = new Random();
 
-            target = rn.nextInt(number_to) + 1;// the random target
-
             while (true) {
 
                 System.out.println("Please type hard, medium or easy.");// user prompt
@@ -175,6 +173,8 @@ public class GuessClass {
             checkNumber();
 
             start = System.currentTimeMillis();// "starts" the timer
+
+            target = rn.nextInt(number_to) + 1;// the random target
 
             while (current_guess != target) { // loops until you guess right - skips it if you guess the right number the first timer
 
