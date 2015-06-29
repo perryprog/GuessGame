@@ -3,6 +3,7 @@
  * A simple guessing game
  */
 
+
 import java.util.InputMismatchException;
 import java.util.Random;// my imports
 import java.util.Scanner;
@@ -27,7 +28,8 @@ public class GuessClass {
             "Nope!",
             "Wow. Nope."};
 
-    private static Boolean[] hasTyped = new Boolean[10];
+    private static int number_to = 10;
+    private static Boolean[] hasTyped = new Boolean[number_to];
 
     private static int target;// the number you will try to get to
     private static int current_guess = 1;// the  number you have just typed
@@ -51,7 +53,7 @@ public class GuessClass {
 
     private static void makeFalse() {
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i < number_to; i++) {
 
             hasTyped[i] = false;
 
@@ -65,7 +67,7 @@ public class GuessClass {
 
         while (!is_number) {
 
-            System.out.print("I am thinking of a number 1 through 10... Can you guess it?");// first message you see
+            System.out.print("I am thinking of a number 1 through " + number_to + "... Can you guess it?");// first message you see
             System.out.println();// new line
 
             try {
@@ -79,9 +81,9 @@ public class GuessClass {
 
                     } catch (ArrayIndexOutOfBoundsException x) {
 
-                        if (current_guess <= 1 && current_guess >= 10) {
+                        if (current_guess <= 1 && current_guess >= number_to) {
 
-                            System.out.println("Please only type numbers one through ten!");
+                            System.out.println("Please only type numbers one through " + number_to + "!");
 
                         }
 
@@ -99,6 +101,30 @@ public class GuessClass {
 
     }
 
+    private static void checkToNumber() {
+
+        boolean isCheckNumber = false;
+
+        while (!isCheckNumber) {
+
+            try {
+
+                System.out.println("Please type a number to guess in between that and 1.");
+                number_to = user_input.nextInt();
+                isCheckNumber = true;
+
+                hasTyped = new Boolean[number_to];
+
+            } catch (InputMismatchException x) {
+
+                System.out.println("Only Type text, please.");
+
+            }
+
+        }
+
+    }
+
     public static void main(String[] args) {
 
         while (true) {// loop so you don't have to restart program
@@ -106,7 +132,7 @@ public class GuessClass {
             user_input = new Scanner(System.in);// configuring imports
             Random rn = new Random();
 
-            target = rn.nextInt(10) + 1;// the random target
+            target = rn.nextInt(number_to) + 1;// the random target
 
             while (true) {
 
@@ -125,6 +151,8 @@ public class GuessClass {
                 System.exit(0);
 
             }
+
+            checkToNumber();
 
             makeFalse();// function for making boolean array false (line 11)
 
@@ -146,82 +174,82 @@ public class GuessClass {
 
             checkNumber();
 
-            if (current_guess >= 1 && current_guess <= 10) {
+            start = System.currentTimeMillis();// "starts" the timer
 
-                start = System.currentTimeMillis();// "starts" the timer
+            while (current_guess != target) { // loops until you guess right - skips it if you guess the right number the first timer
 
-                while (current_guess != target) { // loops until you guess right - skips it if you guess the right number the first timer
+                not_number = rn.nextInt(number_to) + 1;// for medium difficulty
 
-                    not_number = rn.nextInt(10) + 1;// for medium difficulty
+                while (not_number == current_guess || not_number == target) {// makes sure not number is not repetitive
 
-                    while (not_number == current_guess || not_number == target) {// makes sure not number is not repetitive
+                    not_number = rn.nextInt(number_to) + 1;// resets number if so
 
-                        not_number = rn.nextInt(10) + 1;// resets number if so
+                }
+                if (difficulty.equals("medium")) {
+                    not_number--;//so we don't crash :/
+                    hasTyped[not_number] = true;
+                }
 
-                    }
-                    if (difficulty.equals("medium")) {
-                        not_number--;//so we don't crash :/
-                        hasTyped[not_number] = true;
-                    }
+                rand_message = rn.nextInt(messagesHigher.length); // gets the next random message
 
-                    rand_message = rn.nextInt(messagesHigher.length); // gets the next random message
+                higher = current_guess < target; // sets higher to true if target is higher
 
-                    higher = current_guess < target; // sets higher to true if target is higher
-
-                    //current_guess--;
-                    if (hasTyped[current_guess]) { // looks if you are insane (I'm not kidding)
-                        System.out.println("The definition of insanity is doing the same thing, but expecting a different result.");
-                        insane_points++;
-                    }
-                    if (difficulty.equals("easy")) {// the messages
-                        if (higher) {
-
-                            System.out.println(messagesHigher[rand_message]);
-
-                        } else {
-
-                            System.out.println(messagesLower[rand_message]);
-
-                        }
-                    } else {
-                        if (difficulty.equals("hard")) {
-
-                            System.out.println(hardMessage[rand_message]);
-
-                        } else {
-
-                            hasTyped[not_number] = true;
-                            not_number++;
-                            System.out.println(hardMessage[rand_message] + " But is also not " + not_number + ".");
-
-                        }
-
-                    }
-
-                    checkNumber();
+                if (difficulty.equals("medium")) {
+                    current_guess--;
                     hasTyped[current_guess] = true;
-
                 }
+                if (hasTyped[current_guess]) { // looks if you are insane (I'm not kidding)
+                    System.out.println("The definition of insanity is doing the same thing, but expecting a different result.");
+                    insane_points++;
+                }
+                current_guess++;
 
-                times_guessed++;// one up to how many guesses you have
+                if (difficulty.equals("easy")) {// the messages
+                    if (higher) {
 
-                stop = System.currentTimeMillis();// "stops" the timer
+                        System.out.println(messagesHigher[rand_message]);
 
-                total_mill = stop - start;// figures out the total time it took to run
-                total_sec = total_mill / 1000;// does above, in seconds
+                    } else {
 
+                        System.out.println(messagesLower[rand_message]);
 
-                if (times_guessed == 1) {// if you had 1 guess you get a special message
-
-                    System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed on your first try! In addition you had " + insane_points + " insane points!");// first try message
-
+                    }
                 } else {
+                    if (difficulty.equals("hard")) {
 
-                    times_guessed++;
+                        System.out.println(hardMessage[rand_message]);
 
-                    System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed " + times_guessed + " times! In addition you had " + insane_points + " insane points!");// +1 try else message
+                    } else {
+
+                        hasTyped[not_number] = true;
+                        not_number++;
+                        System.out.println(hardMessage[rand_message] + " But is also not " + not_number + ".");
+
+                    }
 
                 }
+
+                checkNumber();
+
+            }
+
+            times_guessed++;// one up to how many guesses you have
+
+            stop = System.currentTimeMillis();// "stops" the timer
+
+            total_mill = stop - start;// figures out the total time it took to run
+            total_sec = total_mill / 1000;// does above, in seconds
+
+
+            if (times_guessed == 1) {// if you had 1 guess you get a special message
+
+                System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed on your first try! In addition you had " + insane_points + " insane points!");// first try message
+
+            } else {
+
+                times_guessed++;
+
+                System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed " + times_guessed + " times! In addition you had " + insane_points + " insane points!");// +1 try else message
 
             }
 
@@ -230,3 +258,4 @@ public class GuessClass {
     }
 
 }
+
