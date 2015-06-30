@@ -94,7 +94,7 @@ public class GuessClass {
             }
             catch (InputMismatchException x) {
                 System.out.println("Please only type numbers!");
-                user_input = new Scanner(System.in);// configuring imports
+                user_input = new Scanner(System.in);// reconfiguring imports
                 is_number = false;
             }
         }
@@ -107,6 +107,8 @@ public class GuessClass {
 
         while (!isCheckNumber) {
 
+
+
             try {
 
                 System.out.println("Please type a number to guess in between that and 1.");
@@ -118,6 +120,9 @@ public class GuessClass {
             } catch (InputMismatchException x) {
 
                 System.out.println("Only Type text, please.");
+
+                user_input = new Scanner(System.in);// reconfiguring imports
+                isCheckNumber = false;
 
             }
 
