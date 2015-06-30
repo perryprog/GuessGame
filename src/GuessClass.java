@@ -39,6 +39,7 @@ public class GuessClass {
     private static int insane_points = 0;
 
     private static boolean higher;// for if the target is higher then what you guessed
+    private static boolean sanityWork;
 
     private static long start;// timer
     private static long stop;// timer
@@ -63,40 +64,28 @@ public class GuessClass {
     private static void checkNumber() {
 
         boolean is_number = false;// so you don't type text
-        boolean isInBounds = false;// so you don't go out of bounds 
 
         while (!is_number) {
 
             System.out.print("I am thinking of a number 1 through " + number_to + "... Can you guess it?");// first message you see
             System.out.println();// new line
 
-            try {
 
-                while (!isInBounds) {
-                    try {
+            while (!is_number) {
+                try {
 
-                        current_guess = user_input.nextInt();// sets your guess to what you type
-                        is_number = true;
-                        isInBounds = true;
+                    current_guess = user_input.nextInt();// sets your guess to what you type
+                    is_number = true;
 
-                    } catch (ArrayIndexOutOfBoundsException x) {
-
-                        if (current_guess <= 1 && current_guess >= number_to) {
-
-                            System.out.println("Please only type numbers one through " + number_to + "!");
-
-                        }
-
-                    }
+                } catch (InputMismatchException x) {
+                    System.out.println("Please only type numbers!");
+                    user_input = new Scanner(System.in);// reconfiguring imports
+                    is_number = false;
 
                 }
 
             }
-            catch (InputMismatchException x) {
-                System.out.println("Please only type numbers!");
-                user_input = new Scanner(System.in);// reconfiguring imports
-                is_number = false;
-            }
+
         }
 
     }
@@ -106,7 +95,6 @@ public class GuessClass {
         boolean isCheckNumber = false;
 
         while (!isCheckNumber) {
-
 
 
             try {
@@ -128,6 +116,34 @@ public class GuessClass {
 
         }
 
+    }
+
+    private static void sanityCheck() {
+
+        boolean inBounds = false;
+
+        while (!inBounds) {
+
+            try {
+
+
+                if (hasTyped[current_guess]) { // looks if you are insane (I'm not kidding)
+                    current_guess--;
+                    System.out.println("The definition of insanity is doing the same thing, but expecting a different result.");
+                    insane_points++;
+                    inBounds = true;
+                    sanityWork = true;
+                }
+            } catch (ArrayIndexOutOfBoundsException x) {
+                if (current_guess <= 1 || current_guess >= number_to) {
+
+                    System.out.println("Please only type numbers 1 through " + number_to + "!");
+
+                    inBounds = true;
+                    sanityWork = false;
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -185,13 +201,19 @@ public class GuessClass {
 
                 not_number = rn.nextInt(number_to) + 1;// for medium difficulty
 
+
+                while (!sanityWork) {
+                    sanityCheck();
+                    checkNumber();
+                }
+
                 while (not_number == current_guess || not_number == target) {// makes sure not number is not repetitive
 
                     not_number = rn.nextInt(number_to) + 1;// resets number if so
 
                 }
                 if (difficulty.equals("medium")) {
-                    not_number--;//so we don't crash :/
+                    not_number--;// so we don't crash
                     hasTyped[not_number] = true;
                 }
 
@@ -202,11 +224,9 @@ public class GuessClass {
                 if (difficulty.equals("medium")) {
                     current_guess--;
                     hasTyped[current_guess] = true;
+                    current_guess++;
                 }
-                if (hasTyped[current_guess]) { // looks if you are insane (I'm not kidding)
-                    System.out.println("The definition of insanity is doing the same thing, but expecting a different result.");
-                    insane_points++;
-                }
+
                 current_guess++;
 
                 if (difficulty.equals("easy")) {// the messages
