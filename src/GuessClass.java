@@ -52,7 +52,7 @@ public class GuessClass {
     private static Scanner user_input;
 
 
-    private static void makeFalse() {
+    private static void makeFalse() {// this is for making hasTyped all false
 
         for (int i = 0; i < number_to; i++) {
 
@@ -61,7 +61,7 @@ public class GuessClass {
         }
     }
 
-    private static void checkNumber() {
+    private static void checkNumber() {// this runs the messages you see
 
         boolean is_number = false;// so you don't type text
 
@@ -72,13 +72,13 @@ public class GuessClass {
 
 
             while (!is_number) {
-                try {
+                try {// in case you don't type a number
 
                     current_guess = user_input.nextInt();// sets your guess to what you type
                     is_number = true;
                     sanityWork = true;
 
-                    higher = current_guess < target; // sets higher to true if target is higher
+                    higher = current_guess < target; // sets higher to true if target is higher then what you guessed
 
                     if (current_guess != target) {
                         if (difficulty.equals("easy")) {// the messages
@@ -108,6 +108,8 @@ public class GuessClass {
 
                     }
 
+                    times_guessed++;// one up to how many guesses you have
+
                 } catch (InputMismatchException x) {
                     System.out.println("Please only type numbers!");
                     user_input = new Scanner(System.in);// reconfiguring imports
@@ -121,14 +123,14 @@ public class GuessClass {
 
     }
 
-    private static void checkTargetNumber() {
+    private static void checkTargetNumber() {// this is for typing the the in between and checking it
 
-        boolean isCheckNumber = false;
+        boolean isCheckNumber = false;// because this can't go out of bounds we only need to make sure it is a number
 
-        while (!isCheckNumber) {
+        while (!isCheckNumber) {// case in point
 
 
-            try {
+            try {// again, to make sure you only type numbers
 
                 System.out.println("Please type a number to guess in between that and 1.");
                 number_to = user_input.nextInt();
@@ -149,7 +151,7 @@ public class GuessClass {
 
     }
 
-    private static void sanityCheck() {
+    private static void sanityCheck() {// much name
 
         boolean inBounds = false;
 
@@ -165,8 +167,8 @@ public class GuessClass {
                     sanityWork = true;
                 }
                 else break;
-            } catch (ArrayIndexOutOfBoundsException x) {
-                if (current_guess <= 1 || current_guess >= number_to) {
+            } catch (ArrayIndexOutOfBoundsException x) {// this is what makes sure you don't go out of bounds when typing your guess
+                if (current_guess <= 1 || current_guess >= number_to) {// not sure I need this if -_-
 
                     System.out.println("Please only type numbers 1 through " + number_to + "!");
 
@@ -176,6 +178,19 @@ public class GuessClass {
             }
         }
     }
+
+    private static void stopProgram() {
+
+        if (start_string.equals("stop")) {
+
+            System.out.println("Ending...");
+
+            System.exit(0);
+
+        }
+
+    }
+
 
     public static void main(String[] args) {
 
@@ -190,11 +205,12 @@ public class GuessClass {
                 difficulty = user_input.next();
                 if (difficulty.equals("hard") || difficulty.equals("easy") || difficulty.equals("medium") || difficulty.equals("easter")) {// check for if your answer is valid
                     break;
+
                 }
 
             }
 
-            if (difficulty.equals("easter")) {// I not saying. :3
+            if (difficulty.equals("easter")) {// I not saying :3
 
                 System.out.println("You win! Party!!!!!!");
 
@@ -203,7 +219,6 @@ public class GuessClass {
             }
 
             checkTargetNumber();
-
             makeFalse();// function for making boolean array false (line 11)
 
             while (true) {
@@ -214,36 +229,33 @@ public class GuessClass {
                 }
             }
 
-            if (start_string.equals("stop")) {
+            stopProgram();// stops program if you type stop
 
-                System.out.println("Ending...");
-
-                System.exit(0);
-
-            }
 
             start = System.currentTimeMillis();// "starts" the timer
-
             target = rn.nextInt(number_to) + 1;// the random target
 
             while (current_guess != target) { // loops until you guess right - skips it if you guess the right number the first timer
 
                 not_number = rn.nextInt(number_to) + 1;// for medium difficulty
-
                 rand_message = rn.nextInt(messagesHigher.length); // gets the next random message
 
                 sanityWork = false;
-                while (!sanityWork) {
+                while (!sanityWork) {// this does your number guessing and checking :D
+
                     checkNumber();
                     sanityCheck();
+
                 }
 
-                if (current_guess != target) {
+                if (current_guess != target) {// runs if you did not guess right
+
                     while (not_number == current_guess || not_number == target) {// makes sure not number is not repetitive
 
                         not_number = rn.nextInt(number_to) + 1;// resets number if so
 
                     }
+
                     if (difficulty.equals("medium")) {
                         not_number--;// so we don't crash
                         hasTyped[not_number] = true;
@@ -253,8 +265,6 @@ public class GuessClass {
 
                 }
             }
-
-            times_guessed++;// one up to how many guesses you have
 
             stop = System.currentTimeMillis();// "stops" the timer
 
@@ -267,8 +277,6 @@ public class GuessClass {
                 System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed on your first try! In addition you had " + insane_points + " insane points!");// first try message
 
             } else {
-
-                times_guessed++;
 
                 System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed " + times_guessed + " times! In addition you had " + insane_points + " insane points!");// +1 try else message
 
