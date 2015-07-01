@@ -31,7 +31,7 @@ public class GuessClass {
     private static int number_to = 10;
     private static Boolean[] hasTyped = new Boolean[number_to];
 
-    private static int target;// the number you will try to get to
+    private static int target = -1;// the number you will try to get to
     private static int current_guess = 1;// the  number you have just typed
     private static int rand_message;// for the random message you see
     private static int times_guessed = 0;// the number of times you guessed
@@ -54,7 +54,7 @@ public class GuessClass {
 
     private static void makeFalse() {
 
-        for (int i = 1; i < number_to; i++) {
+        for (int i = 0; i < number_to; i++) {
 
             hasTyped[i] = false;
 
@@ -76,6 +76,37 @@ public class GuessClass {
 
                     current_guess = user_input.nextInt();// sets your guess to what you type
                     is_number = true;
+                    sanityWork = true;
+
+                    higher = current_guess < target; // sets higher to true if target is higher
+
+                    if (current_guess != target) {
+                        if (difficulty.equals("easy")) {// the messages
+                            if (higher) {
+
+                                System.out.println(messagesHigher[rand_message]);
+
+                            } else {
+
+                                System.out.println(messagesLower[rand_message]);
+
+                            }
+                        } else {
+                            if (difficulty.equals("hard")) {
+
+                                System.out.println(hardMessage[rand_message]);
+
+                            } else {
+
+                                hasTyped[not_number] = true;
+                                not_number++;
+                                System.out.println(hardMessage[rand_message] + " But is also not " + not_number + ".");
+
+                            }
+
+                        }
+
+                    }
 
                 } catch (InputMismatchException x) {
                     System.out.println("Please only type numbers!");
@@ -90,7 +121,7 @@ public class GuessClass {
 
     }
 
-    private static void checkToNumber() {
+    private static void checkTargetNumber() {
 
         boolean isCheckNumber = false;
 
@@ -127,13 +158,13 @@ public class GuessClass {
             try {
 
 
-                if (hasTyped[current_guess]) { // looks if you are insane (I'm not kidding)
-                    current_guess--;
+                if (hasTyped[current_guess-1]) { // looks if you are insane (I'm not kidding)
                     System.out.println("The definition of insanity is doing the same thing, but expecting a different result.");
                     insane_points++;
                     inBounds = true;
                     sanityWork = true;
                 }
+                else break;
             } catch (ArrayIndexOutOfBoundsException x) {
                 if (current_guess <= 1 || current_guess >= number_to) {
 
@@ -171,7 +202,7 @@ public class GuessClass {
 
             }
 
-            checkToNumber();
+            checkTargetNumber();
 
             makeFalse();// function for making boolean array false (line 11)
 
@@ -191,8 +222,6 @@ public class GuessClass {
 
             }
 
-            checkNumber();
-
             start = System.currentTimeMillis();// "starts" the timer
 
             target = rn.nextInt(number_to) + 1;// the random target
@@ -201,61 +230,28 @@ public class GuessClass {
 
                 not_number = rn.nextInt(number_to) + 1;// for medium difficulty
 
-
-                while (!sanityWork) {
-                    sanityCheck();
-                    checkNumber();
-                }
-
-                while (not_number == current_guess || not_number == target) {// makes sure not number is not repetitive
-
-                    not_number = rn.nextInt(number_to) + 1;// resets number if so
-
-                }
-                if (difficulty.equals("medium")) {
-                    not_number--;// so we don't crash
-                    hasTyped[not_number] = true;
-                }
-
                 rand_message = rn.nextInt(messagesHigher.length); // gets the next random message
 
-                higher = current_guess < target; // sets higher to true if target is higher
-
-                if (difficulty.equals("medium")) {
-                    current_guess--;
-                    hasTyped[current_guess] = true;
-                    current_guess++;
+                sanityWork = false;
+                while (!sanityWork) {
+                    checkNumber();
+                    sanityCheck();
                 }
 
-                current_guess++;
+                if (current_guess != target) {
+                    while (not_number == current_guess || not_number == target) {// makes sure not number is not repetitive
 
-                if (difficulty.equals("easy")) {// the messages
-                    if (higher) {
-
-                        System.out.println(messagesHigher[rand_message]);
-
-                    } else {
-
-                        System.out.println(messagesLower[rand_message]);
+                        not_number = rn.nextInt(number_to) + 1;// resets number if so
 
                     }
-                } else {
-                    if (difficulty.equals("hard")) {
-
-                        System.out.println(hardMessage[rand_message]);
-
-                    } else {
-
+                    if (difficulty.equals("medium")) {
+                        not_number--;// so we don't crash
                         hasTyped[not_number] = true;
-                        not_number++;
-                        System.out.println(hardMessage[rand_message] + " But is also not " + not_number + ".");
-
                     }
 
+                    hasTyped[current_guess-1] = true;
+
                 }
-
-                checkNumber();
-
             }
 
             times_guessed++;// one up to how many guesses you have
