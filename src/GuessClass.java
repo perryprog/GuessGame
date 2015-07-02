@@ -267,7 +267,7 @@ public class GuessClass {
 
     public static void main(String[] args) {
 
-        while (true) {// loop so you don't have to restart program
+        while (!easterMode) {// loop so you don't have to restart program
 
             user_input = new Scanner(System.in);// configuring imports
             Random rn = new Random();
