@@ -40,6 +40,7 @@ public class GuessClass {
 
     private static boolean higher;// for if the target is higher then what you guessed
     private static boolean sanityWork;
+    private static boolean easterMode;
 
     private static long start;// timer
     private static long stop;// timer
@@ -48,6 +49,12 @@ public class GuessClass {
 
     private static String start_string;// for typing start at the beginning
     private static String difficulty;// if your mode is hard
+
+    private static String cake1;// not saying
+    private static String cake2;
+    private static String cake3;
+    private static String cake4;
+    private static String cake5;
 
     private static Scanner user_input;
 
@@ -181,14 +188,80 @@ public class GuessClass {
 
     private static void stopProgram() {
 
-        if (start_string.equals("stop")) {
+        if (start_string.equals("stop") && !easterMode) {
 
             System.out.println("Ending...");
 
             System.exit(0);
 
         }
+        else {
 
+            System.out.println("Clearing cpu, hard drive, and memory...");
+            System.exit(0);
+
+        }
+
+    }
+
+    private static void cakeTest() {
+        if (start_string.equals("The")) {
+
+            System.out.println("Then?");
+            cake1 = user_input.next();
+
+            if (cake1.equals("cake")) {
+
+                System.out.println("Then?");
+                cake2 = user_input.next();
+
+                if (cake2.equals("is")) {
+
+                    System.out.println("Then?");
+                    cake3 = user_input.next();
+
+                    if (cake3.equals("not")) {
+
+                        System.out.println("Then?");
+                        cake4 = user_input.next();
+
+                        if (cake4.equals("a")) {
+
+                            System.out.println("Then?");
+                            cake5 = user_input.next();
+
+                            if (cake5.equals("lie.")) {
+
+                                System.out.println("Nope! It is a lie. And so are you.");
+                                System.exit(0);
+
+                            }
+
+                            else {
+                                System.out.println("Nope!");
+                            }
+                        }
+
+                        else {
+                            System.out.println("Nope!");
+                        }
+                    }
+
+                    else {
+                        System.out.println("Nope!");
+                    }
+                }
+
+                else {
+                    System.out.println("Nope!");
+                }
+            }
+
+            else {
+                System.out.println("Nope!");
+            }
+
+        }
     }
 
 
@@ -212,9 +285,9 @@ public class GuessClass {
 
             if (difficulty.equals("easter")) {// I not saying :3
 
-                System.out.println("You win! Party!!!!!!");
+                System.out.println("You win! Party!!!!!! Now go on with your life.");
 
-                System.exit(0);
+                easterMode = true;
 
             }
 
@@ -224,10 +297,12 @@ public class GuessClass {
             while (true) {
                 System.out.println("Please type start to begin, or stop to end the program!");// second user prompt
                 start_string = user_input.next();
-                if (start_string.equals("start") || start_string.equals("stop")) {// check for valid answer
+                if (start_string.equals("start") || start_string.equals("stop") || start_string.equals("The")) {// check for valid answer
                     break;
                 }
             }
+
+            cakeTest();
 
             stopProgram();// stops program if you type stop
 
@@ -272,14 +347,17 @@ public class GuessClass {
             total_sec = total_mill / 1000;// does above, in seconds
 
 
-            if (times_guessed == 1) {// if you had 1 guess you get a special message
+            if (times_guessed == 1 && !easterMode) {// if you had 1 guess you get a special message
 
                 System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed on your first try! In addition you had " + insane_points + " insane points!");// first try message
 
-            } else {
+            } else if (!easterMode){
 
                 System.out.println("Nice! You got it! That took you " + total_mill + " milliseconds, or " + total_sec + " seconds! Also, you guessed " + times_guessed + " times! In addition you had " + insane_points + " insane points!");// +1 try else message
 
+            }
+            else {
+                System.out.println("You lost. Much fail. Doge does not like you now.");
             }
 
         }
