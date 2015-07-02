@@ -48,7 +48,7 @@ public class GuessClass {
     private static long total_sec;// timer
 
     private static String start_string;// for typing start at the beginning
-    private static String difficulty;// if your mode is hard
+    private static String difficulty;// for your mode
 
     private static String cake1;// not saying
     private static String cake2;
@@ -88,7 +88,7 @@ public class GuessClass {
                     higher = current_guess < target; // sets higher to true if target is higher then what you guessed
 
                     if (current_guess != target) {
-                        if (difficulty.equals("easy")) {// the messages
+                        if (difficulty.equals("easy") || difficulty.equals("easter")) {// the messages
                             if (higher) {
 
                                 System.out.println(messagesHigher[rand_message]);
@@ -188,16 +188,10 @@ public class GuessClass {
 
     private static void stopProgram() {
 
-        if (start_string.equals("stop") && !easterMode) {
+        if (start_string.equals("stop")) {
 
             System.out.println("Ending...");
 
-            System.exit(0);
-
-        }
-        else {
-
-            System.out.println("Clearing cpu, hard drive, and memory...");
             System.exit(0);
 
         }
