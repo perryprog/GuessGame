@@ -205,7 +205,7 @@ public class GuessClass {
     }
 
     private static void cakeTest() {
-        if (start_string.equals("The")) {
+        if (start_string.equals("The") && easterMode) {
 
             System.out.println("Then?");
             cake1 = user_input.next();
