@@ -188,12 +188,17 @@ public class GuessClass {
 
     private static void stopProgram() {
 
-        if (start_string.equals("stop")) {
+        if (start_string.equals("stop") && !easterMode) {
 
             System.out.println("Ending...");
 
             System.exit(0);
 
+        }
+
+        else if (start_string.equals("stop")){
+            System.out.println("Restarting laptop with factory reset...");
+            System.exit(0);
         }
 
     }
