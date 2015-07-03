@@ -14,19 +14,22 @@ public class GuessClass {
             "No way, it is higher then that!",
             "Really? It is higher then that!",
             "Nope! It is higher then that!",
-            "Wow. You do not know how guess. Higher!"};
+            "Wow. You do not know how guess. Higher!"
+    };
 
     final private static String[] messagesLower = {
             "No way, it is lower then that!",
             "Really? It is lower then that!",
             "Nope! It is lower then that!",
-            "Wow. You do not know how to guess. Lower!"};
+            "Wow. You do not know how to guess. Lower!"
+    };
 
     final private static String[] hardMessage = {// array for hard mode
             "No way!",
             "Really?",
             "Nope!",
-            "Wow. Nope."};
+            "Wow. Nope."
+    };
 
     private static int number_to = 10;
     private static Boolean[] hasTyped = new Boolean[number_to];
